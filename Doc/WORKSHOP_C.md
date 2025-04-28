@@ -100,7 +100,7 @@ void SysTick_Handler(void)
 
 ---
 
-## 5. Explicación de funciones
+## 3.3. Explicación de funciones
 
 | Función            | Descripción                                                                                  |
 |--------------------|----------------------------------------------------------------------------------------------|
@@ -111,7 +111,7 @@ void SysTick_Handler(void)
 
 ---
 
-## 6. Ejercicio (igual que en ASM)
+## 4. Ejercicio (igual que en ASM)
 
 ### Botón y LED en C puro
 
