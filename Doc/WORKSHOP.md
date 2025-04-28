@@ -132,3 +132,4 @@ Después de implementar la lógica, prepara una **presentación** de tu trabajo 
 
 ¡Éxito con el taller!
 
+Luego, puedes continuar con [WORKSHOP_C.md](WORKSHOP_C.md) para traducir las instrucciones de lenguaje ensamblador a lenguaje C.

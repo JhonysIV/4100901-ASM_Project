@@ -27,6 +27,7 @@ La guía se organiza en varios documentos Markdown que encontrarás en la carpet
 1. **[SETUP.md](Doc/SETUP.md):** Configuración del entorno y creación del proyecto vacío en VS Code; Renombrar `main`, modificar `CMakeLists.txt`.
 2. **[ASM_CONFIG.md](Doc/ASM_CONFIG.md):** Guía de introducción al set the instrucciones de un procesador (ISA) y al lenguaje ensamblador.
 3. **[WORKSHOP.md](Doc/WORKSHOP.md):** Taller práctico de ensamblador e instrucciones básicas del ISA de ARM.
+3. **[WORKSHOP_C.md](Doc/WORKSHOP.md):** Taller práctico traduciendo las instrucciones básicas del ISA de ARM a `lenguaje C`.
 
 > **Nota:** Cada documento incluye enlaces relativos para facilitar la navegación y referencias cruzadas.
 
