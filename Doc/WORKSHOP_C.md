@@ -15,9 +15,10 @@ Antes de escribir código, realiza estos pasos:
    ```cmake
    # Sources
     set(sources_SRCS ${sources_SRCS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/Src/main.c
+        
         # ${CMAKE_CURRENT_SOURCE_DIR}/Src/main.s
         # ${CMAKE_CURRENT_SOURCE_DIR}/Src/workshop.s
+        ${CMAKE_CURRENT_SOURCE_DIR}/Src/workshop.c # added
         ${CMAKE_CURRENT_SOURCE_DIR}/Src/syscall.c
         ${CMAKE_CURRENT_SOURCE_DIR}/Src/sysmem.c
         ${CMAKE_CURRENT_SOURCE_DIR}/Startup/startup_stm32l476rgtx.s
