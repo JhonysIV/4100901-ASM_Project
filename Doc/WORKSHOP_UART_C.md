@@ -61,6 +61,7 @@ typedef struct {
     volatile uint32_t AHB1ENR;
     volatile uint32_t AHB2ENR;
     volatile uint32_t AHB3ENR;
+    uint32_t RESERVED4;
     volatile uint32_t APB1ENR1;
     volatile uint32_t APB1ENR2;
     volatile uint32_t APB2ENR;
@@ -78,15 +79,17 @@ typedef struct {
 
 // USART2
 typedef struct {
+    volatile uint32_t CR1;
+    volatile uint32_t CR2;
+    volatile uint32_t CR3;
+    volatile uint32_t BRR;
+    volatile uint32_t GTPR;
+    volatile uint32_t RTOR;
+    volatile uint32_t RQR;
     volatile uint32_t ISR;
     volatile uint32_t ICR;
     volatile uint32_t RDR;
     volatile uint32_t TDR;
-    volatile uint32_t BRR;
-    volatile uint32_t CR1;
-    volatile uint32_t CR2;
-    volatile uint32_t CR3;
-    volatile uint32_t GTPR;
 } USART_TypeDef;
 #define USART2 ((USART_TypeDef *)0x40004400U)
 
@@ -96,7 +99,6 @@ typedef struct {
 // Constantes
 #define LD2_PIN        5U
 #define BUTTON_PIN    13U
-#define SYS_CLK       16000000U
 #define BAUD_RATE     115200U
 #define HSI_FREQ      4000000U
 ```
@@ -106,8 +108,6 @@ typedef struct {
 ## 4. Código de ejemplo (`Src/workshop_uart.c`)
 
 ```c
-#include "workshop_uart.h"  // Encabezados y typedefs
-
 void init_gpio_uart(void) {
     // PA2->TX AF7, PA3->RX AF7
     RCC->AHB2ENR |= (1 << 0);  // Enable GPIOA
@@ -119,9 +119,10 @@ void init_gpio_uart(void) {
 
 void init_uart(void) {
     RCC->APB1ENR1 |= (1 << 17);  // Enable USART2
-    USART2->BRR = (SYS_CLK + (BAUD_RATE/2)) / BAUD_RATE;
+    USART2->BRR = (HSI_FREQ + (BAUD_RATE/2)) / BAUD_RATE;
     USART2->CR1 = (1 << 3) | (1 << 2);  // TE | RE
     USART2->CR1 |= (1 << 0);            // UE
+    
     USART2->CR1 |= (1 << 5);            // RXNE interrupt
     NVIC_ISER1 |= (1U << 6);            // IRQ38
 }
