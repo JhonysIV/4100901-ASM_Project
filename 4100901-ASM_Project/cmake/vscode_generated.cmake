@@ -22,7 +22,6 @@ set(linker_script_SRC ${linker_script_SRC}
 
 # Sources
 set(sources_SRCS ${sources_SRCS}
-    
 	#${CMAKE_CURRENT_SOURCE_DIR}/Src/main.s
 	# ${CMAKE_CURRENT_SOURCE_DIR}/Src/workshop.s
 	#${CMAKE_CURRENT_SOURCE_DIR}/Src/workshop.c

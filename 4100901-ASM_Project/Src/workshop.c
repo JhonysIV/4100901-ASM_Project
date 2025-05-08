@@ -89,7 +89,6 @@ void init_systick(void);
 void init_button(void);
 void init_led(void);
 
-
 // --- Programa principal ------------------------------------------------------
 int main(void)
 {
