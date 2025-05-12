@@ -1,8 +1,8 @@
-# WORKSHOP\_TIM3\_PWM\_C.md
+# WORKSHOP\_TIM2\_PWM\_C.md
 
 ## 1. Objetivo
 
-Este documento guía la configuración de **TIM3\_CH1** como salida PWM en **C puro**, empleando `typedef struct` para mapear registros de periféricos, definiendo macros para acceso a hardware y organizando las funciones.
+Este documento guía la configuración de **TIM2\_CH1** como salida PWM en **C puro**, empleando `typedef struct` para mapear registros de periféricos, definiendo macros para acceso a hardware y organizando las funciones.
 
 ---
 
@@ -18,7 +18,7 @@ Antes de escribir código, realiza estos pasos:
 
 ## 3. Tipos y Defines
 
-Definimos estructuras que reflejan los registros de RCC, GPIOA, y TIM3:
+Definimos estructuras que reflejan los registros de RCC, GPIOA, y TIM2:
 
 ```c
 #include <stdint.h>
@@ -109,14 +109,14 @@ typedef struct {
 ## 4. Código de ejemplo (`Src/workshop_pwm.c`)
 
 ```c
-// Inicializa PA6 para TIM3_CH1 (AF2)
+// Inicializa PA5 para TIM2_CH1 (AF1)
 void init_gpio_pwm(void)
 {
     RCC->AHB2ENR |= (1 << 0);                   // Enable GPIOA
-    // PA6 alternate function mode
+    // PA5 alternate function mode
     GPIOA->MODER &= ~(3U << (PWM_PIN * 2));
     GPIOA->MODER |=  (2U << (PWM_PIN * 2));
-    // AF2 on PA5 to TIM2_CH1
+    // AF1 on PA5 to TIM2_CH1
     GPIOA->AFRL  &= ~(0xFU << (PWM_PIN * 4));
     GPIOA->AFRL  |=  (1U << (PWM_PIN * 4));
 }
@@ -151,15 +151,15 @@ int main(void)
 
 | Función           | Descripción                                                          |
 | ----------------- | -------------------------------------------------------------------- |
-| `init_gpio_pwm()` | Configura PA6 como AF2 para TIM3\_CH1.                               |
-| `init_tim3_pwm()` | Habilita TIM3, programa PSC, ARR, modo PWM1, habilita salida y CCR1. |
-| `main()`          | Inicializa GPIO y TIM3 y entra en bucle infinito.                        |
+| `init_gpio_pwm()` | Configura PA6 como AF1 para TIM2\_CH1.                               |
+| `init_tim2_pwm()` | Habilita TIM2, programa PSC, ARR, modo PWM1, habilita salida y CCR1. |
+| `main()`          | Inicializa GPIO y TIM2 y entra en bucle infinito.                        |
 
 ---
 
 ## 6. Ejercicio
 .
-1. Ajusta **duty cycle** cambiando `TIM3->CCR1` al 10%, 25%, y 75%.
+1. Ajusta **duty cycle** cambiando `TIM2->CCR1` al 10%, 25%, y 75%.
 2. Implementa función `set_pwm_duty(uint8_t percent)` que actualice CCR1 en porcentaje.
 3. Crea bucle en `main()` que varíe el duty ciclo del 0% al 100% de forma suave.
 
