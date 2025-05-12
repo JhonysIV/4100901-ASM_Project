@@ -173,7 +173,7 @@ int main(void) {
 
 ## 6. Ejercicio
 
-1. Cambia la configuración de paridad a **8E1** en `init_uart()`.
+1. Cambia la configuración de tasa de baudios en `init_uart()`.
 2. Implementa `void uart_send_string(const char*)`.
 3. Recibe línea completa fuera de la ISR y envía mensaje: **"Recibido: \<línea>\r\n"**.
 4. Documenta pros/cons de polling vs interrupciones.
