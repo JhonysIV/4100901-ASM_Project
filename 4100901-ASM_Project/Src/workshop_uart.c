@@ -79,6 +79,8 @@ typedef struct {
 #define BAUD_RATE     115200U
 #define HSI_FREQ      4000000U
 
+// #define __USE_USART_POLLING // Comment this line to use interrupts
+
 void init_gpio_uart(void) {
     // PA2->TX AF7, PA3->RX AF7
     RCC->AHB2ENR |= (1 << 0);  // Enable GPIOA
@@ -93,8 +95,10 @@ void init_uart(void) {
     USART2->BRR = (HSI_FREQ + (BAUD_RATE/2)) / BAUD_RATE;
     USART2->CR1 = (1 << 3) | (1 << 2);  // TE | RE
     USART2->CR1 |= (1 << 0);            // UE
-    // USART2->CR1 |= (1 << 5);            // RXNE interrupt
-    // NVIC_ISER1 |= (1U << 6);            // IRQ38
+#ifndef __USE_USART_POLLING
+    USART2->CR1 |= (1 << 5);            // RXNE interrupt
+    NVIC_ISER1 |= (1U << 6);            // IRQ38
+#endif
 }
 
 void uart_send(char c) {
@@ -107,6 +111,7 @@ char uart_receive(void) {
     return (char)(USART2->RDR & 0xFF);
 }
 
+#ifndef __USE_USART_POLLING
 void USART2_IRQHandler(void) {
     if (USART2->ISR & (1 << 5)) {
         char c = USART2->RDR;
@@ -114,6 +119,7 @@ void USART2_IRQHandler(void) {
         uart_send(c);                    // Echo
     }
 }
+#endif
 
 int main(void) {
     init_gpio_uart();
@@ -121,6 +127,9 @@ int main(void) {
     const char *msg = "UART listo!\r\n";
     for (const char *p = msg; *p; ++p) uart_send(*p);
     while (1) {
-        __asm volatile("wfi");
+#ifdef __USE_USART_POLLING
+        char byte = uart_receive();
+        uart_send(byte);
+#endif
     }
 }
